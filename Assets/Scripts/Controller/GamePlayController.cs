@@ -7,33 +7,33 @@ public class GamePlayController : MonoBehaviour
 {
     public static GamePlayController instance;
 
-    //public Text mTxtTime;
+    public Text mTxtTime;
 
-    //private int mTime = 30;
+    private int mTime = 30;
 
-    ////Start is called before the first frame update
-    //void Start()
-    //{
-    //    InvokeRepeating("Count", 0.0f, 1.0f);
-    //}
-    //void Count()
-    //{
-    //    if (mTime == 0)
-    //    {
-    //        GameOverShowPanel();
-    //        CancelInvoke("Count");
-    //    }
-    //    else
-    //    {
-    //        mTime--;
-    //    }
-    //}
+    //Start is called before the first frame update
+    void Start()
+    {
+        InvokeRepeating("Count", 0.0f, 1.0f);
+    }
+    void Count()
+    {
+        if (mTime == 0)
+        {
+            GameOverShowPanel();
+            CancelInvoke("Count");
+        }
+        else
+        {
+            mTime--;
+        }
+    }
 
-    ////Update is called once per frame
-    //void Update()
-    //{
-    //    mTxtTime.text = mTime.ToString();
-    //}
+    //Update is called once per frame
+    void Update()
+    {
+        mTxtTime.text = mTime.ToString();
+    }
     void Awake()
     {
         MakeInstance();

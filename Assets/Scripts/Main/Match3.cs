@@ -14,6 +14,7 @@ public class Match3 : MonoBehaviour
     [Header("Prefabs")]
     public GameObject nodePiece;
     public GameObject killedPiece;
+    //ObjectPooler objectPooler;
 
     int width = 9;
     int height = 14;
@@ -172,6 +173,7 @@ public class Match3 : MonoBehaviour
         flipped = new List<FlippedPieces>();
         dead = new List<NodePiece>();
         killed = new List<KilledPiece>();
+        //objectPooler = ObjectPooler.Instance;
 
         InitializeBoard();
         VerifyBoard();
@@ -224,6 +226,16 @@ public class Match3 : MonoBehaviour
 
                 int val = node.value;
                 if (val <= 0) continue;
+
+                //GameObject newPiece = ObjectPooler.SharedInstance.GetPooledObject();
+                //if (newPiece != null)
+                //{
+                //    newPiece.transform.position = nodePiece.transform.position;
+                //    newPiece.transform.rotation = nodePiece.transform.rotation;
+                //    newPiece.SetActive(true);
+                //}
+                //GameObject p = Instantiate(newPiece, gameBoard);
+
                 GameObject p = Instantiate(nodePiece, gameBoard);
                 NodePiece piece = p.GetComponent<NodePiece>();
                 RectTransform rect = p.GetComponent<RectTransform>();
@@ -274,7 +286,14 @@ public class Match3 : MonoBehaviour
             set = available[0];
         else
         {
-            GameObject kill = GameObject.Instantiate(killedPiece, killedBoard);
+            GameObject newPiece = ObjectPooler.SharedInstance.GetPooledObject();
+            if (newPiece != null)
+            {
+                newPiece.transform.position = killedPiece.transform.position;
+                newPiece.transform.rotation = killedPiece.transform.rotation;
+                newPiece.SetActive(true);
+            }
+            GameObject kill = GameObject.Instantiate(newPiece, killedBoard);
             KilledPiece kPiece = kill.GetComponent<KilledPiece>();
             set = kPiece;
             killed.Add(kPiece);
